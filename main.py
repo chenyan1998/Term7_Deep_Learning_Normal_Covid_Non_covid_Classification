@@ -29,7 +29,7 @@ test_loader = DataLoader(ld_test, batch_size = bs_val, shuffle = True)
 val_loader = DataLoader(ld_val, batch_size = bs_test, shuffle = True)
 
 model = norm_infected_model()
-model = train(model, args.epochs, args.learning_rate, args.gpu, train_loader, val_loader, args.save_dir)
+model = train(model, args.epochs, args.learning_rate, args.gpu, train_loader, val_loader, args.save_dir_norm_inf_model)
 
 # covid, non_covid model 
 ld_train_covid, ld_test_covid, ld_val_covid= get_data_obj_covid()
@@ -39,7 +39,7 @@ test_loader_covid = DataLoader(ld_test_covid, batch_size = bs_val, shuffle = Tru
 val_loader_covid = DataLoader(ld_val_covid, batch_size = bs_test, shuffle = True)
 
 model = covid_non_model()
-model = train(model, args.epochs, args.learning_rate, args.gpu, train_loader_covid, val_loader_covid, args.save_dir)
+model = train(model, args.epochs, args.learning_rate, args.gpu, train_loader_covid, val_loader_covid, args.save_dir_covid_non_model)
 
 # save models
 if args.save_dir_norm_inf_model:

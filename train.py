@@ -5,7 +5,7 @@ import time
 import os 
 from norm_infected_model import norm_infected_model
 import numpy as np 
-from metrics import accuracy_per_batch, f1_score_per_batch
+from metrics import accuracy_per_batch, f1_per_batch
 import matplotlib.pyplot as plt
 
 # Define validation function 
@@ -23,14 +23,14 @@ def validation(model, testloader, criterion, device):
         pred = torch.flatten(torch.round(output)).int()
         accuracy += accuracy_per_batch(labels, pred)
 
-        f1_score += f1_score_per_batch(labels, pred)
+        f1_score += f1_per_batch(labels, pred)
 
     return test_loss, accuracy, f1_score
 
 def train(model, n_epoch, lr, device, trainloader, validloader, model_dir):
 
     # Define criterion and optimizer
-    criterion = nn.crossEntropyLoss()
+    criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr = lr)
 
     model.to(device)
@@ -70,7 +70,7 @@ def train(model, n_epoch, lr, device, trainloader, validloader, model_dir):
 
             train_accuracy += accuracy_per_batch(labels, pred)
 
-            train_f1_score += f1_score_per_batch(labels, pred)
+            train_f1_score += f1_per_batch(labels, pred)
 
             if steps % print_every == 0:
                 # Eval mode for predictions
