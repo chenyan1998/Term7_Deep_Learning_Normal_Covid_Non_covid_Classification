@@ -62,6 +62,9 @@ def train(model, n_epoch, lr, device, trainloader, validloader, model_dir):
             output = model.forward(images)
             pred = torch.flatten(torch.round(output)).int()
 
+            labels = labels[:,1].long()
+            print("output", output)
+            print("label", labels)
             loss = criterion(output, labels)
             loss.backward()
             optimizer.step()

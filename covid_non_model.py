@@ -21,7 +21,7 @@ class covid_non_model(nn.Module):
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(32, 64, 3)
         self.conv3 = nn.Conv2d(64, 128, 3)
-        self.fc1 = nn.Linear(70*70*128, 120)
+        self.fc1 = nn.Linear(17*17*128, 120)
         self.fc2 = nn.Linear(120, 100)
         self.fc3 = nn.Linear(100, 1)
         
