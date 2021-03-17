@@ -132,7 +132,6 @@ class Lung_Train_Dataset(Dataset):
         
         # Get item special method
         first_val = int(list(self.dataset_numbers.values())[0])
-        print('firstval: ',first_val)
         if index < first_val:
             class_val = 'noncovid'
             label = torch.Tensor([1, 0])

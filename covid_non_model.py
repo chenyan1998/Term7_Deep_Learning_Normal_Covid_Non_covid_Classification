@@ -35,4 +35,4 @@ class covid_non_model(nn.Module):
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
-        return F.sigmoid(x)
+        return torch.sigmoid(x) #Use F.sigmoid(x) or torch.sigmoid(x)

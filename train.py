@@ -18,6 +18,8 @@ def validation(model, testloader, criterion, device):
         images, labels = images.to(device), labels.to(device)
                 
         output = model.forward(images)
+        labels = labels[:,1]
+        output = torch.flatten(output)
         test_loss += criterion(output, labels).item()
 
         pred = torch.flatten(torch.round(output)).int()
@@ -30,7 +32,7 @@ def validation(model, testloader, criterion, device):
 def train(model, n_epoch, lr, device, trainloader, validloader, model_dir):
 
     # Define criterion and optimizer
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.BCEWithLogitsLoss()
     optimizer = optim.Adam(model.parameters(), lr = lr)
 
     model.to(device)
@@ -62,10 +64,11 @@ def train(model, n_epoch, lr, device, trainloader, validloader, model_dir):
             output = model.forward(images)
             pred = torch.flatten(torch.round(output)).int()
 
-            labels = labels[:,1].long()
+            labels = labels[:,1]
+            output = torch.flatten(output)
             print("output", output)
             print("label", labels)
-            loss = criterion(output, labels)
+            loss = criterion(output, labels) #CrossEntropyLoss for multiclass, change to BCEWithLogitLoss
             loss.backward()
             optimizer.step()
 
