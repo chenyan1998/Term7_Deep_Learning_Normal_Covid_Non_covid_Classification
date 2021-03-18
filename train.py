@@ -66,8 +66,8 @@ def train(model, n_epoch, lr, device, trainloader, validloader, model_dir):
 
             labels = labels[:,1]
             output = torch.flatten(output)
-            print("output", output)
-            print("label", labels)
+            #print("output", output)
+            #print("label", labels)
             loss = criterion(output, labels) #CrossEntropyLoss for multiclass, change to BCEWithLogitLoss
             loss.backward()
             optimizer.step()
