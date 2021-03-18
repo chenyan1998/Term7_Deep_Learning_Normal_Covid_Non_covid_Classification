@@ -130,20 +130,20 @@ class Lung_Train_Dataset(Dataset):
             # Get item special method
             first_val = int(list(self.dataset_numbers.values())[0])
             second_val = int(list(self.dataset_numbers.values())[1])
-            print('first_val: ',first_val)
-            print('second_val: ',second_val)
+            #print('first_val: ',first_val)
+            #print('second_val: ',second_val)
             if index < first_val:
                 class_val = 'normal'
                 label = torch.Tensor([1, 0])
-                print('choice1', index)
+                #print('choice1', index)
             elif index> first_val  and index < first_val +second_val:
-                print('choice2', index)
+                #print('choice2', index)
                 index = index- first_val
                 class_val = 'infectednon'
                 label = torch.Tensor([0, 1])
 
             elif index> second_val and index < 5216:
-                print('choice3', index)
+                #print('choice3', index)
                 class_val = 'infectedcovid'
                 index = index - (first_val + second_val)
                 label = torch.Tensor([0, 1])
@@ -276,8 +276,8 @@ class Lung_Test_Dataset(Dataset):
         # Get item special method
         first_val = int(list(self.dataset_numbers.values())[0])
         second_val = int(list(self.dataset_numbers.values())[1])
-        print('first_val: ',first_val)
-        print('second_val: ',second_val)
+        #print('first_val: ',first_val)
+        #print('second_val: ',second_val)
         if index < first_val:
             class_val = 'normal'
             label = torch.Tensor([1, 0])
@@ -322,7 +322,7 @@ class Lung_Val_Dataset(Dataset):
         self.dataset_numbers = {'val_normal' : 8,                   'val_infectednon' : 8,                   'val_infectedcovid': 8}
         
         # Path to images for different parts of the dataset
-        self.dataset_paths = { 'val_normal': './dataset_demo/val/normal/',                         'val_infectednon': './dataset/val/infected/non-covid/',                         'val_infectedcovid': './dataset/val/infected/covid/'}
+        self.dataset_paths = { 'val_normal': './dataset/val/normal/',                         'val_infectednon': './dataset/val/infected/non-covid/',                         'val_infectedcovid': './dataset/val/infected/covid/'}
         
         
     def describe(self):
@@ -364,7 +364,7 @@ class Lung_Val_Dataset(Dataset):
         assert class_val in self.classes.values(), err_msg
         
         max_val = self.dataset_numbers['{}_{}'.format(group_val, class_val)]
-        print('max_val: ', max_val)
+        #print('max_val: ', max_val)
         err_msg = "Error - index_val variable should be an integer between 0 and the maximal number of images."
         err_msg += "\n(In {}/{}, you have {} images.)".format(group_val, class_val, max_val)
         assert isinstance(index_val, int), err_msg
@@ -417,21 +417,22 @@ class Lung_Val_Dataset(Dataset):
             # Get item special method
             first_val = int(list(self.dataset_numbers.values())[0])
             second_val = int(list(self.dataset_numbers.values())[1])
-            print('first_val: ',first_val)
-            print('second_val: ',second_val)
+            class_val = ""
+            #print('first_val: ',first_val)
+            #print('second_val: ',second_val)
             if index < first_val:
                 class_val = 'normal'
                 label = torch.Tensor([1, 0])
-                print('choice1', index)
+                #print('choice1', index)
             elif index> first_val  and index < first_val +second_val:
-                print('choice2', index)
+                #print('choice2', index)
                 index = index- first_val
-                class_val = 'infectednon'
+                class_val = 'infected'
                 label = torch.Tensor([0, 1])
 
             elif index> second_val and index < 24:
-                print('choice3', index)
-                class_val = 'infectedcovid'
+                #print('choice3', index)
+                class_val = 'infected'
                 index = index - (first_val + second_val)
                 label = torch.Tensor([0, 1])
             im = self.open_img(self.groups, class_val, index)
