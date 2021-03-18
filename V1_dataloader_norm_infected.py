@@ -14,104 +14,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torchvision import transforms
-
-class Lung_Dataset(Dataset):
-    """
-    Generic Dataset class.
-    """
-    
-    def __init__(self):
-        """
-        Constructor for generic Dataset class - simply assembles
-        the important parameters in attributes.
-        """
-        
-        # All images are of size 150 x 150
-        self.img_size = (150, 150)
-        
-        # Only two classes will be considered here (normal and infected)
-        self.classes = {0: 'normal', 1: 'infected'}
-        
-        # The dataset has been split in training, testing and validation datasets
-        self.groups = ['train', 'test', 'val']
-        
-        # Number of images in each part of the dataset
-        self.dataset_numbers = {'train_normal': 1341,                                'train_infected': 3875,                                'val_normal': 8,                                'val_infected': 16,                                'test_normal':234,                                'test_infected': 380}
-        
-        # Path to images for different parts of the dataset
-        self.dataset_paths = {'train_normal': './dataset/train/normal',                              'train_infected': './dataset/train/infected',                              'val_normal': './dataset/val/normal',                              'val_infected': './dataset/val/infected',                              'test_normal': './dataset/test/normal',                              'test_infected': './dataset/test/infected'}
-        
-        
-    def describe(self):
-        """
-        Descriptor function.
-        Will print details about the dataset when called.
-        """
-        
-        # Generate description
-        msg = "This is the Lung Dataset used for the Small Project Demo in the 50.039 Deep Learning class"
-        msg += " in Feb-March 2021. \n"
-        msg += "It contains a total of {} images, ".format(sum(self.dataset_numbers.values()))
-        msg += "of size {} by {}.\n".format(self.img_size[0], self.img_size[1])
-        msg += "Images have been split in three groups: training, testing and validation sets.\n"
-        msg += "The images are stored in the following locations "
-        msg += "and each one contains the following number of images:\n"
-        for key, val in self.dataset_paths.items():
-            msg += " - {}, in folder {}: {} images.\n".format(key, val, self.dataset_numbers[key])
-        print(msg)
-        
-    
-    def open_img(self, group_val, class_val, index_val):
-        """
-        Opens image with specified parameters.
-        
-        Parameters:
-        - group_val should take values in 'train', 'test' or 'val'.
-        - class_val variable should be set to 'normal' or 'infected'.
-        - index_val should be an integer with values between 0 and the maximal number of images in dataset.
-        
-        Returns loaded image as a normalized Numpy array.
-        """
-        
-        # Asserts checking for consistency in passed parameters
-        err_msg = "Error - group_val variable should be set to 'train', 'test' or 'val'."
-        assert group_val in self.groups, err_msg
-        
-        err_msg = "Error - class_val variable should be set to 'normal' or 'infected'."
-        assert class_val in self.classes.values(), err_msg
-        
-        max_val = self.dataset_numbers['{}_{}'.format(group_val, class_val)]
-        err_msg = "Error - index_val variable should be an integer between 0 and the maximal number of images."
-        err_msg += "\n(In {}/{}, you have {} images.)".format(group_val, class_val, max_val)
-        assert isinstance(index_val, int), err_msg
-        assert index_val >= 0 and index_val <= max_val, err_msg
-        
-        # Open file as before
-        path_to_file = '{}/{}.jpg'.format(self.dataset_paths['{}_{}'.format(group_val, class_val)], index_val)
-        with open(path_to_file, 'rb') as f:
-            # Convert to Numpy array and normalize pixel values by dividing by 255.
-            im = np.asarray(Image.open(f))/255
-        f.close()
-        return im
-    
-    
-    def show_img(self, group_val, class_val, index_val):
-        """
-        Opens, then displays image with specified parameters.
-        
-        Parameters:
-        - group_val should take values in 'train', 'test' or 'val'.
-        - class_val variable should be set to 'normal' or 'infected'.
-        - index_val should be an integer with values between 0 and the maximal number of images in dataset.
-        """
-        
-        # Open image
-        im = self.open_img(group_val, class_val, index_val)
-        
-        # Display
-        plt.imshow(im)
-        
-
+# Here is the dataset for normal and infected 
 
 class Lung_Train_Dataset(Dataset):
     
@@ -142,7 +45,6 @@ class Lung_Train_Dataset(Dataset):
         Descriptor function.
         Will print details about the dataset when called.
         """
-        
         # Generate description
         msg = "This is the training dataset of the Lung Dataset"
         msg += " used for the Small Project Demo in the 50.039 Deep Learning class"
