@@ -32,7 +32,7 @@ def validation(model, testloader, criterion, device):
 def train(model, n_epoch, lr, device, trainloader, validloader, model_dir):
 
     # Define criterion and optimizer
-    criterion = nn.BCEWithLogitsLoss()
+    criterion = nn.BCELoss()
     optimizer = optim.Adam(model.parameters(), lr = lr)
 
     model.to(device)
@@ -108,8 +108,8 @@ def train(model, n_epoch, lr, device, trainloader, validloader, model_dir):
                 # Make sure training is back on
                 model.train()
 
-        if (e % 10 == 0): 
-            save_checkpoint(model, optimizer, train_loss_ls, val_loss_ls, os.path.join(model_dir, 'epoch-{}.pt'.format(e)))
+        if (e % 10 == 0) or (e == epochs-1): 
+            save_checkpoint(model, optimizer, epochs, train_loss_ls, val_loss_ls, os.path.join(model_dir, 'epoch-{}.pt'.format(e)))
 
     print(f"Run time: {(time.time() - start)/60:.3f} min")
 

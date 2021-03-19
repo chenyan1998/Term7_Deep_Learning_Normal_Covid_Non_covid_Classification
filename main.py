@@ -24,12 +24,13 @@ ld_train, ld_test, ld_val= get_data_obj()
 bs_train = 64 
 bs_val = 3
 bs_test = 32
+
 train_loader = DataLoader(ld_train, batch_size = bs_train, shuffle = True)
 test_loader = DataLoader(ld_test, batch_size = bs_val, shuffle = True)
 val_loader = DataLoader(ld_val, batch_size = bs_test, shuffle = True)
 
-model1 = norm_infected_model()
-model1 = train(model1, args.epochs, args.learning_rate, args.gpu, train_loader, val_loader, args.save_dir_norm_inf_model)
+# model1 = norm_infected_model()
+# model1 = train(model1, args.epochs, args.learning_rate, args.gpu, train_loader, test_loader, args.save_dir_norm_inf_model)
 
 # covid, non_covid model 
 ld_train_covid, ld_test_covid, ld_val_covid= get_data_obj_covid()
@@ -38,14 +39,12 @@ train_loader_covid = DataLoader(ld_train_covid, batch_size = bs_train, shuffle =
 test_loader_covid = DataLoader(ld_test_covid, batch_size = bs_val, shuffle = True)
 val_loader_covid = DataLoader(ld_val_covid, batch_size = bs_test, shuffle = True)
 
-
-
 model2 = covid_non_model()
-model2 = train(model2, args.epochs, args.learning_rate, args.gpu, train_loader_covid, val_loader_covid, args.save_dir_covid_non_model)
+model2 = train(model2, args.epochs, args.learning_rate, args.gpu, train_loader_covid, test_loader_covid, args.save_dir_covid_non_model)
 
-# save models
-if args.save_dir_norm_inf_model:
-    save_checkpoint(model1, os.path.join(args.save_dir_norm_inf_model, 'epoch-{}.pt'.format(args.epochs)))
+# # save models
+# if args.save_dir_norm_inf_model:
+#     save_checkpoint(model1, os.path.join(args.save_dir_norm_inf_model, 'epoch-{}.pt'.format(args.epochs)))
 
-if args.save_dir_covid_non_model:
-    save_checkpoint(model2, os.path.join(args.save_dir_covid_non_model, 'epoch-{}.pt'.format(args.epochs)))
+# if args.save_dir_covid_non_model:
+#     save_checkpoint(model2, os.path.join(args.save_dir_covid_non_model, 'epoch-{}.pt'.format(args.epochs)))
