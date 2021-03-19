@@ -41,10 +41,3 @@ val_loader_covid = DataLoader(ld_val_covid, batch_size = bs_test, shuffle = True
 
 model2 = covid_non_model()
 model2 = train(model2, args.epochs, args.learning_rate, args.gpu, train_loader_covid, test_loader_covid, args.save_dir_covid_non_model)
-
-# # save models
-# if args.save_dir_norm_inf_model:
-#     save_checkpoint(model1, os.path.join(args.save_dir_norm_inf_model, 'epoch-{}.pt'.format(args.epochs)))
-
-# if args.save_dir_covid_non_model:
-#     save_checkpoint(model2, os.path.join(args.save_dir_covid_non_model, 'epoch-{}.pt'.format(args.epochs)))
