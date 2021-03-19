@@ -1,7 +1,7 @@
 import argparse
 import os 
 from train import save_checkpoint, train 
-from norm_infected_model import norm_infected_model
+from norm_infected_model_VGG import norm_infected_model_VGG
 from covid_non_model import covid_non_model
 from dataloader_norm_infected import get_data_obj
 from torch.utils.data import DataLoader
@@ -28,8 +28,8 @@ train_loader = DataLoader(ld_train, batch_size = bs_train, shuffle = True)
 test_loader = DataLoader(ld_test, batch_size = bs_val, shuffle = True)
 val_loader = DataLoader(ld_val, batch_size = bs_test, shuffle = True)
 
-model1 = norm_infected_model()
-model1 = train(model1, args.epochs, args.learning_rate, args.gpu, train_loader, val_loader, args.save_dir_norm_inf_model)
+model1 = norm_infected_model_VGG()
+model1 = train(model1, args.epochs, args.learning_rate, args.gpu, train_loader, test_loader, args.save_dir_norm_inf_model)
 
 # covid, non_covid model 
 ld_train_covid, ld_test_covid, ld_val_covid= get_data_obj_covid()
@@ -40,12 +40,12 @@ val_loader_covid = DataLoader(ld_val_covid, batch_size = bs_test, shuffle = True
 
 
 
-model2 = covid_non_model()
-model2 = train(model2, args.epochs, args.learning_rate, args.gpu, train_loader_covid, val_loader_covid, args.save_dir_covid_non_model)
+#model2 = covid_non_model()
+#model2 = train(model2, args.epochs, args.learning_rate, args.gpu, train_loader_covid, val_loader_covid, args.save_dir_covid_non_model)
 
 # save models
 if args.save_dir_norm_inf_model:
     save_checkpoint(model1, os.path.join(args.save_dir_norm_inf_model, 'epoch-{}.pt'.format(args.epochs)))
 
-if args.save_dir_covid_non_model:
-    save_checkpoint(model2, os.path.join(args.save_dir_covid_non_model, 'epoch-{}.pt'.format(args.epochs)))
+#if args.save_dir_covid_non_model:
+#    save_checkpoint(model2, os.path.join(args.save_dir_covid_non_model, 'epoch-{}.pt'.format(args.epochs)))

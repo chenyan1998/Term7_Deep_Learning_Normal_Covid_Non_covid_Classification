@@ -367,8 +367,6 @@ class Lung_Val_Dataset(Dataset):
         assert class_val in self.classes.values(), err_msg
         
         max_val = self.dataset_numbers['{}_{}'.format(group_val, class_val)]
-        #print('max_val: ', max_val)
-        #print('index_val: ', index_val)
         err_msg = "Error - index_val variable should be an integer between 0 and the maximal number of images."
         err_msg += "\n(In {}/{}, you have {} images.)".format(group_val, class_val, max_val)
         assert isinstance(index_val, int), err_msg

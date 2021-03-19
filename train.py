@@ -3,7 +3,7 @@ from torch import nn
 from torch import optim
 import time 
 import os 
-from norm_infected_model import norm_infected_model
+from norm_infected_model_VGG import norm_infected_model_VGG
 import numpy as np 
 from metrics import accuracy_per_batch, f1_per_batch
 import matplotlib.pyplot as plt
@@ -32,7 +32,7 @@ def validation(model, testloader, criterion, device):
 def train(model, n_epoch, lr, device, trainloader, validloader, model_dir):
 
     # Define criterion and optimizer
-    criterion = nn.BCEWithLogitsLoss()
+    criterion = nn.BCELoss()
     optimizer = optim.Adam(model.parameters(), lr = lr)
 
     model.to(device)
@@ -66,8 +66,9 @@ def train(model, n_epoch, lr, device, trainloader, validloader, model_dir):
 
             labels = labels[:,1]
             output = torch.flatten(output)
-            #print("output", output)
-            #print("label", labels)
+            #layers = [x for x in model.parameters()]
+            print("output", output)
+            print("label", labels)
             loss = criterion(output, labels) #CrossEntropyLoss for multiclass, change to BCEWithLogitLoss
             loss.backward()
             optimizer.step()
@@ -140,7 +141,7 @@ def load_model(path):
     cp = torch.load(path)
     
     # Make classifier
-    model = norm_infected_model() 
+    model = norm_infected_model_VGG() 
     # Add model info 
     model.optimizer_state_dict = cp['opti_state_dict']
     model.load_state_dict(cp['state_dict'])
