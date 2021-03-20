@@ -170,7 +170,7 @@ class Lung_Test_Dataset(Dataset):
         self.groups = 'test'
         
         # Number of images in each part of the dataset
-        self.dataset_numbers = {'test_noncovid': 242,                                'test_covid': 138}
+        self.dataset_numbers = {'test_noncovid': 242,                                'test_covid': 139}
         
         # Path to images for different parts of the dataset
         self.dataset_paths = {'test_noncovid': './dataset/test/infected/non-covid',                              'test_covid': './dataset/test/infected/covid'}
@@ -304,7 +304,7 @@ class Lung_Val_Dataset(Dataset):
         self.groups = 'val'
         
         # Number of images in each part of the dataset
-        self.dataset_numbers = {'val_noncovid': 8,                                'val_covid': 8}
+        self.dataset_numbers = {'val_noncovid': 8,                                'val_covid': 9}
     
         # Path to images for different parts of the dataset
         self.dataset_paths = {'val_noncovid': './dataset/val/infected/non-covid/',                              'val_covid': './dataset/val/infected/covid/'}

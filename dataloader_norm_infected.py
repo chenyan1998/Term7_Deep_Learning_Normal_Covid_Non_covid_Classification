@@ -130,21 +130,14 @@ class Lung_Train_Dataset(Dataset):
             # Get item special method
             first_val = int(list(self.dataset_numbers.values())[0])
             second_val = int(list(self.dataset_numbers.values())[1])
-            #print('first_val: ',first_val)
-            #print('second_val: ',second_val)
             if index < first_val:
                 class_val = 'normal'
                 label = torch.Tensor([1, 0])
-                #print('choice1', index)
             elif index>= first_val  and index < first_val +second_val:
-                #print('choice2', index)
                 index = index- first_val
                 class_val = 'infectednon'
                 label = torch.Tensor([0, 1])
-
             else:
-                #elif index> second_val and index < 5216:
-                #print('choice3', index)
                 class_val = 'infectedcovid'
                 index = index - (first_val + second_val)
                 label = torch.Tensor([0, 1])
@@ -277,8 +270,6 @@ class Lung_Test_Dataset(Dataset):
         # Get item special method
         first_val = int(list(self.dataset_numbers.values())[0])
         second_val = int(list(self.dataset_numbers.values())[1])
-        #print('first_val: ',first_val)
-        #print('second_val: ',second_val)
         if index < first_val:
             class_val = 'normal'
             label = torch.Tensor([1, 0])
@@ -287,7 +278,6 @@ class Lung_Test_Dataset(Dataset):
             index = index - first_val
             label = torch.Tensor([0, 1])
         else:
-        #elif index> second_val and index < 615:
             class_val = 'infectedcovid'
             index = index - (first_val+ second_val)
             label = torch.Tensor([0, 1])
@@ -367,8 +357,6 @@ class Lung_Val_Dataset(Dataset):
         assert class_val in self.classes.values(), err_msg
         
         max_val = self.dataset_numbers['{}_{}'.format(group_val, class_val)]
-        #print('max_val: ', max_val)
-        #print('index_val: ', index_val)
         err_msg = "Error - index_val variable should be an integer between 0 and the maximal number of images."
         err_msg += "\n(In {}/{}, you have {} images.)".format(group_val, class_val, max_val)
         assert isinstance(index_val, int), err_msg
@@ -421,22 +409,15 @@ class Lung_Val_Dataset(Dataset):
             # Get item special method
             first_val = int(list(self.dataset_numbers.values())[0])
             second_val = int(list(self.dataset_numbers.values())[1])
-            class_val = ""
-            #print('first_val: ',first_val)
-            #print('second_val: ',second_val)
             if index < first_val:
                 class_val = 'normal'
                 label = torch.Tensor([1, 0])
-                #print('choice1', index)
             elif index>= first_val  and index < first_val +second_val:
-                #print('choice2', index)
                 index = index- first_val
                 class_val = 'infectednon'
                 label = torch.Tensor([0, 1])
 
             else:
-                #elif index> second_val and index < 25:
-                #print('choice3', index)
                 class_val = 'infectedcovid'
                 index = index - (first_val + second_val)
                 label = torch.Tensor([0, 1])
