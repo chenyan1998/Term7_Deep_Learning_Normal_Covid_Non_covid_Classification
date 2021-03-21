@@ -15,3 +15,7 @@ To run the final validation set testing and plotting
 3)Change variable path1 = './checkpoints/modelTestModel1/epoch-14.pt'
 4)Change variable path2 = './checkpoints/modelTestModel2/epoch-14.pt'
 5) Run: python main.py "./dataset"
+
+0: Normal
+1: Infected, Non-Covid
+2: Infected, Covid
