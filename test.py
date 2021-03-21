@@ -39,5 +39,19 @@ def predict(testloader, model, path, device):
 
     return all_pred, test_loss, accuracy, recall, precision 
 
+    def input_from_model1(images, labels, preds):
+
+        images_ls = []
+        labels_ls = []
+
+        for i in range(len(preds)):
+            if pred[i] == 1:
+                images_ls.append(images[i])
+                labels_ls.append(labels[i])
+        
+        return images_ls, labels_ls # Need find a way to load in batches like dataloader for line 18 to work 
+                
+        
+
 
 

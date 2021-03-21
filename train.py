@@ -37,6 +37,8 @@ def train(model, n_epoch, lr, device, trainloader, validloader, model_dir):
     # Define criterion and optimizer
     criterion = nn.BCELoss()
     optimizer = optim.Adam(model.parameters(), lr = lr)
+    # optimizer = optim.RMSprop(model.parameters(), lr = lr)
+    # optimizer = optim.SGD(model.parameters(), lr = lr, momentum = 0.9)
 
     model.to(device)
     start = time.time()

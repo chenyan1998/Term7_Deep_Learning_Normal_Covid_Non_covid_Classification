@@ -24,6 +24,8 @@ class covid_non_model(nn.Module):
         self.fc1 = nn.Linear(17*17*128, 120)
         self.fc2 = nn.Linear(120, 100)
         self.fc3 = nn.Linear(100, 1)
+
+        self.initialize_weights()
         
     def forward(self, x):
         ''' Forward pass through the network, returns the output logits '''
@@ -32,7 +34,21 @@ class covid_non_model(nn.Module):
         x = self.pool(F.relu(self.conv2(x)))
         x = self.pool(F.relu(self.conv3(x)))
         x = torch.flatten(x, 1)
-        x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
+        # x = F.relu(self.fc1(x))
+        # x = F.relu(self.fc2(x))
+        x = nn.Tanh()(self.fc1(x))
+        x = nn.Tanh()(self.fc2(x))
         x = self.fc3(x)
         return torch.sigmoid(x) #Use F.sigmoid(x) or torch.sigmoid(x)
+
+    def initialize_weights(self):
+        for m in self.modules():
+            # if isinstance(m, nn.Conv2d):
+            #     nn.init.kaiming_uniform_(m.weight)
+                    
+            #     if m.bias is not None:
+            #         nn.init.constant_(m.bias, 0)
+
+            if isinstance(m, nn.Linear):
+                nn.init.xavier_uniform_(m.weight)
+                nn.init.constant_(m.bias, 0)
