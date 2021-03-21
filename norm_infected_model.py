@@ -18,12 +18,16 @@ class norm_infected_model(nn.Module):
         '''
         super().__init__()
         self.conv1 = nn.Conv2d(1, 32, 3)
+        torch.nn.init.xavier_uniform(self.conv1.weight)
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(32, 64, 3)
+        torch.nn.init.xavier_uniform(self.conv2.weight)
         self.conv3 = nn.Conv2d(64, 128, 3)
+        torch.nn.init.xavier_uniform(self.conv3.weight)
         self.fc1 = nn.Linear(17*17*128, 200)
         self.fc2 = nn.Linear(200, 100)
         self.fc3 = nn.Linear(100, 1)
+        self.dropout = nn.Dropout(0.35)
         
     def forward(self, x):
         ''' Forward pass through the network, returns the output logits '''
@@ -33,8 +37,8 @@ class norm_infected_model(nn.Module):
         x = self.pool(F.relu(self.conv3(x)))
         x = torch.flatten(x, 1)
         x = F.relu(self.fc1(x))
+        x = self.dropout(x)
         x = F.relu(self.fc2(x))
+        x = self.dropout(x)
         x = self.fc3(x)
-        # print('fc3', x)
-        # print('fc3_sigmoid', F.sigmoid(x))
-        return F.sigmoid(x)
+        return torch.sigmoid(x)
