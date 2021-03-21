@@ -7,6 +7,8 @@ from dataloader_norm_infected import get_data_obj
 from torch.utils.data import DataLoader
 from dataloader_covid_non import get_data_obj_covid 
 from test import predict_model1, predict_model2, input_from_model1
+from data_siever import data_siever
+from validation_plotter import validation_plotter
 
 
 parser = argparse.ArgumentParser(description="Train image classifier model")
@@ -59,13 +61,17 @@ all_pred, all_labels, all_images, test_loss, accuracy, recall, precision = predi
 model2 = covid_non_model()
 path2 = './checkpoints/model2_6/epoch-9.pt'
 
-input_images, input_labels = input_from_model1(all_images, all_labels, all_pred)
-all_pred, all_labels, all_images, test_loss, accuracy, recall, precision = predict_model2(input_labels, input_images, model2, path2, device)
+input_images, input_labels, norm_images, norm_labels = input_from_model1(all_images, all_labels, all_pred)
 
-print("Predictions: ", all_pred)
-print("Labels: ", all_labels)
-print(test_loss)
-print(accuracy)
-print(recall)
-print(precision)
+bs_val = 8
+ld_train, ld_test, ld_val= get_data_obj_covid()
+val_loader = DataLoader(ld_val, batch_size = bs_val , shuffle = True)
+
+#Code for sieving
+input_labels, input_images, other_labels, other_images = data_siever(input_images, input_labels, val_loader)
+
+all_pred2, all_labels2, all_images2, test_loss2, accuracy2, recall2, precision2 = predict_model2(input_labels, input_images, model2, path2, device)
+
+validation_plotter(all_pred2, all_labels2, all_images2, accuracy, accuracy2, norm_images, norm_labels, other_images, other_labels)
+
 
