@@ -1,4 +1,10 @@
 # Tiff923-Normal_Covid_Non_covid_Classification
+
+Chen Yan (1003620) 
+Goh Yi Lin,Tiffany (1003674)               
+Xavier Tan De Jun (1003376)
+
+
 To train the Normal-Infected Model
 1) Uncomment the Model 1 training block
 2) Comment out all other blocks (Covid-Non-Covid block and Graph Plotting block)
