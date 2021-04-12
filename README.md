@@ -1,4 +1,4 @@
-# Tiff923-Normal_Covid_Non_covid_Classification
+# Normal_Covid_Non_covid_Classification
 
 Chen Yan (1003620) 
 Goh Yi Lin,Tiffany (1003674)               
